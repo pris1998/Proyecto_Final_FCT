@@ -1,4 +1,4 @@
-package com.example.proyecto.modelos.vista;
+package com.example.proyecto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modelos.vista.LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <EditText
         android:id="@+id/txtEmailUser"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtEmailUser" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnEntrar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
