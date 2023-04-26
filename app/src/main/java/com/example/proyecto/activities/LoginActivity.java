@@ -19,13 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+    //Todo. Lo he creado statico para poder llamarlo en otras actividades
+    //Todo. en vez de crear todo el tiempo uno nuevo (se llama RegisterActivity)
+    public static FirebaseAuth auth = FirebaseAuth.getInstance();
     //TextViews
     TextView txtEmailUser;
     TextView txtPasswordUser;
 
     //Coge el usuario usado
-    FirebaseUser user ;
+    public static FirebaseUser user ;
     String email = "";
     String password = "";
     Button btnEntrar;
@@ -67,6 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }else{
                                 myToast("No está verificado");
+                                //No esta verificado te reedirige a la pagina del Registro para registrar el usuario
+                                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class );
+                                startActivity(intent);
                             }
 
                         }
@@ -92,10 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-    //Si el email es igual al escrito , si coincide pone un mensaje de esta todo bien
-    //Comprobar si esta verificado
-
-
 
     public void myToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
