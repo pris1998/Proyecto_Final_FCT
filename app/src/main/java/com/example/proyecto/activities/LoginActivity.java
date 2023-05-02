@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     String email = "";
     String password = "";
     Button btnEntrar;
+    Button btnRegistro;
     int conteo  = 0;
 
 
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         //Inicializacion de las variables
         txtEmailUser = (TextView) findViewById(R.id.txtEmailUser);
         btnEntrar = (Button) findViewById(R.id.btnEntrar);
+        btnRegistro = (Button) findViewById(R.id.btnRegistro);
         txtPasswordUser = (TextView) findViewById(R.id.txtPasswordUser);
 
 
@@ -68,10 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("Login","mensaje");
                                 startActivity(intent);
                             }else{
-                                myToast("No está verificado");
-                                //No esta verificado te reedirige a la pagina del Registro para registrar el usuario
-                                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class );
-                                startActivity(intent);
+                                myToast("No está verificado, debe registrarse");
                             }
 
                         }
@@ -93,6 +92,16 @@ public class LoginActivity extends AppCompatActivity {
                     //Si es esta vacío los campos (email y contraseña)manda el mensaje "Debe completar los campos"
                     Toast.makeText(LoginActivity.this, "Debe completar los campos",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myToast("No está verificado");
+                //No esta verificado te reedirige a la pagina del Registro para registrar el usuario
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class );
+                startActivity(intent);
             }
         });
 

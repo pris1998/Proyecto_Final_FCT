@@ -6,4 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".activities.PortadaActivity">
 
+    <ImageView
+        android:id="@+id/imageViewIcono"
+        android:layout_width="318dp"
+        android:layout_height="313dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgVTitulo"
+        app:srcCompat="@drawable/icono" />
+
+    <ImageView
+        android:id="@+id/imgVTitulo"
+        android:layout_width="0dp"
+        android:layout_height="174dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/titulo_app" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
