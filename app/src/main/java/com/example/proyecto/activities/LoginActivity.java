@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myToast("No está verificado");
                 //No esta verificado te reedirige a la pagina del Registro para registrar el usuario
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class );
                 startActivity(intent);
