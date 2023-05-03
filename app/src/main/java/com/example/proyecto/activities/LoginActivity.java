@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.proyecto.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,15 +25,17 @@ public class LoginActivity extends AppCompatActivity {
     //Todo. en vez de crear todo el tiempo uno nuevo (se llama RegisterActivity)
     public static FirebaseAuth auth = FirebaseAuth.getInstance();
     //TextViews
-    TextView txtEmailUser;
-    TextView txtPasswordUser;
+    private TextInputLayout txtEmailUser;
+    private TextInputLayout txtPasswordUser;
+
+    Button btnEntrar;
+    Button btnRegistro;
 
     //Coge el usuario usado
     public static FirebaseUser user ;
     String email = "";
     String password = "";
-    Button btnEntrar;
-    Button btnRegistro;
+
     int conteo  = 0;
 
 
@@ -40,19 +44,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //Inicializacion de las variables
-        txtEmailUser = (TextView) findViewById(R.id.txtEmailUser);
+        txtEmailUser = (TextInputLayout) findViewById(R.id.txtEmailUser);
         btnEntrar = (Button) findViewById(R.id.btnEntrar);
         btnRegistro = (Button) findViewById(R.id.btnRegistro);
-        txtPasswordUser = (TextView) findViewById(R.id.txtPasswordUser);
-
-
+        txtPasswordUser =  (TextInputLayout) findViewById(R.id.txtPasswordUser);
 
 
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = String.valueOf(txtEmailUser.getText());
-                password = String.valueOf(txtPasswordUser.getText());
+                email = String.valueOf(txtEmailUser.getPrefixTextView());
+                password = String.valueOf(txtPasswordUser.getPrefixTextView());
 
                 if (!email.isEmpty() && !password.isEmpty()) {
 

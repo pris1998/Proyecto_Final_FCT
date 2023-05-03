@@ -12,22 +12,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 
 public class RegisterActivity extends AppCompatActivity {
+    ImageView imageViewRegister;
+    TextView txtVEmailR, txtnewUser;
 
-    EditText txtEEmail;
-    EditText txtEPassword;
+    TextInputLayout txtEEmail, txtEPassword, confirmarPassword;
 
-    EditText txtE2Password;
 
-    Button btnRegistrar;
-    Button btnVerPassword;
+
+
+    Button btnInicioS;
+
 
     String email ;
     String password;
@@ -43,21 +48,31 @@ public class RegisterActivity extends AppCompatActivity {
 
         txtEEmail = findViewById(R.id.txtEEmail);
         txtEPassword = findViewById(R.id.txtEPassword);
-        txtE2Password = findViewById(R.id.txtE2Password);
-        btnRegistrar = findViewById(R.id.btnRegistrar);
-        btnVerPassword = findViewById(R.id.btnVerPassword);
+        confirmarPassword = findViewById(R.id.confirmarPassword);
+        btnInicioS = findViewById(R.id.btnInicioS);
+        txtnewUser = findViewById(R.id.txtnewUser);
 
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+
+        btnInicioS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = txtEEmail.getText().toString().trim();
-                password = txtEPassword.getText().toString().trim();
-                password_2 = txtE2Password.getText().toString().trim();
+                email = txtEEmail.getPrefixTextView().toString().trim();
+                password = txtEPassword.getPrefixTextView().toString().trim();
+
                 //llamada a la función private
                 createUsers(email,password);
 
                 //Mensaje en toast para saber que el registro ha sido existoso
                 myToast("Registro existoso");
+            }
+        });
+        txtnewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //vuelve al pulsar el texto al inicio
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class );
+                intent.putExtra("Login","mensaje");
+                startActivity(intent);
             }
         });
 
