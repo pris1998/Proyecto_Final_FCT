@@ -165,4 +165,13 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
+    //Para volver hacia atrás
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

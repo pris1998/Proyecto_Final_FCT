@@ -13,15 +13,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.regex.Pattern;
 
@@ -32,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     //TextViews
     private TextInputEditText txtEmailUser;
     private TextInputEditText txtPasswordUser;
+    TextView txtOlvidarPassword;
 
     Button btnInicioSesion;
     Button btnRegistro;
@@ -40,6 +49,12 @@ public class LoginActivity extends AppCompatActivity {
     public static FirebaseUser user ;
     String email = "";
     String password = "";
+
+
+    //Variables de google
+    public SignInButton signInButton;
+    public GoogleSignInClient signInClient;
+    public static final int SIGN_IN = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegistro = (Button) findViewById(R.id.btnRegistro);
         txtPasswordUser = findViewById(R.id.txtPasswordUser);
 
+        txtOlvidarPassword = findViewById(R.id.txtOlvidarPassword);
 
         btnInicioSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +83,35 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        /*
+        //Google configuration
+        signInButton = findViewById(R.id.loginGoogle);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerwithGoogle();
+            }
+        });
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_usuario_id))
+                .requestEmail()
+                .build();
+
+        signInClient = GoogleSignIn.getClient(this,gso);
+        */
+
+        //Olvidaste contraseña
+        txtOlvidarPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
+
 
     public void myToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
@@ -116,4 +159,41 @@ public class LoginActivity extends AppCompatActivity {
                 });
      }
 
+    private void registerwithGoogle(){
+         Intent signInintent = signInClient.getSignInIntent();
+         startActivity(signInintent);
+         //startActivityForResult(signInintent,SIGN_IN);
+
+     }
+     @Override
+     public void onActivityResult(int requestCode,int resultCode ,Intent data ){
+        super.onActivityResult(requestCode, resultCode, data);
+         if (requestCode == SIGN_IN) {
+             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+             try{
+                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                 //llamamod una vez iniciada sesion nos da un resultado
+                 firebaseAuthWithToken(account.getIdToken());
+             }catch (ApiException exception){
+                myToast("Fallo de Google");
+             }
+         }
+     }
+    private void firebaseAuthWithToken(String idToken){
+        //nos da las credenciales
+         AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+         auth.signInWithCredential(credential)
+                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                     @Override
+                     public void onComplete(@NonNull Task<AuthResult> task) {
+                         if (task.isSuccessful()) {
+                             Intent intent = new Intent(LoginActivity.this,ChooseUserActivity.class );
+                             startActivity(intent);
+                             finish();
+                         }else{
+                             myToast("No se pudo iniciar sesión");
+                         }
+                     }
+                 });
+     }
     }

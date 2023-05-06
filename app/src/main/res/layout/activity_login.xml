@@ -81,15 +81,22 @@
             android:layout_height="wrap_content"
             android:text="Entrar"
             android:textSize="18sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            />
+            android:layout_marginTop="12dp" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/loginGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"/>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="1dp"
             android:layout_marginBottom="10dp"
             android:text="Registrar"
             android:textSize="18sp"

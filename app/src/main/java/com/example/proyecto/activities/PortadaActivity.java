@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.proyecto.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -45,7 +47,9 @@ public class PortadaActivity extends AppCompatActivity {
             public void run() {
                 //Si el usuario ya inicio sesion se dirige directamente al ChooseUser
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
+                //Si el usuario ya inicio sesioncon Google
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(PortadaActivity.this);
+                if (user != null && account != null) {
                     Intent intent = new Intent(PortadaActivity.this,ChooseUserActivity.class );
                     startActivity(intent);
                     finish();
