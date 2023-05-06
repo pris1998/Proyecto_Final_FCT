@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.proyecto.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PortadaActivity extends AppCompatActivity {
 
@@ -41,9 +43,19 @@ public class PortadaActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(PortadaActivity.this,LoginActivity.class );
-                startActivity(intent);
-                finish();
+                //Si el usuario ya inicio sesion se dirige directamente al ChooseUser
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    Intent intent = new Intent(PortadaActivity.this,ChooseUserActivity.class );
+                    startActivity(intent);
+                    finish();
+                }else{
+                    //Si aun no ha iniciado sesion se dirige al Login
+                    Intent intent = new Intent(PortadaActivity.this,LoginActivity.class );
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         }, 4000);
 

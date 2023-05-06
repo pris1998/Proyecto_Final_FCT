@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,28 +18,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     ImageView imageViewRegister;
     TextView txtVEmailR, txtnewUser;
 
-    TextInputLayout txtEEmail, txtEPassword, confirmarPassword;
-
-
-
+    TextInputEditText txtEEmail, txtEPassword, confirmarPassword;
 
     Button btnInicioS;
 
-
     String email ;
     String password;
-    String password_2;
-    int conteo  = 0;
-    int maxIntento = 0;
+    String confirmPassword;
+
+    private FirebaseAuth Fauth = FirebaseAuth.getInstance();
+
 
 
     @Override
@@ -49,23 +53,10 @@ public class RegisterActivity extends AppCompatActivity {
         txtEEmail = findViewById(R.id.txtEEmail);
         txtEPassword = findViewById(R.id.txtEPassword);
         confirmarPassword = findViewById(R.id.confirmarPassword);
+
         btnInicioS = findViewById(R.id.btnInicioS);
         txtnewUser = findViewById(R.id.txtnewUser);
 
-
-        btnInicioS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                email = txtEEmail.getPrefixTextView().toString().trim();
-                password = txtEPassword.getPrefixTextView().toString().trim();
-
-                //llamada a la función private
-                createUsers(email,password);
-
-                //Mensaje en toast para saber que el registro ha sido existoso
-                myToast("Registro existoso");
-            }
-        });
         txtnewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +67,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        btnInicioS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validate();
+            }
+        });
     }
 
     public void myToast(String mensaje){
@@ -84,17 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     //Metodo a parte para crear usuarios y evitar repetir codigo
     private void createUsers(String email , String password){
-        //validar email y contraseña
-        if (validateEmailPassword(email,password)) {
             //Si no estan vacios los rellena y los crea
             auth.createUserWithEmailAndPassword( email,  password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
-                    /*// si todo esta bien ocurre esto :
-                    user = auth.getCurrentUser();
-                    if () {
-
-                    }*/
                     //Manda un email al correo de registrado para comprobar que está bien hecho
                     user.sendEmailVerification();
                     //alerta para decirle al usuario que se ha mandado un menseje
@@ -110,28 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
-        }else {
-            //Si  estan vacío los campos (email y contraseña)manda el mensaje "Debe completar los campos"
-            myToast( "Debe completar los campos");
-        }
     }
-    //donde meterlo
-    private boolean validateEmailPassword(String email , String password){
-        if(email.isEmpty() || password.length() < 8  && maxIntento >= conteo){
-            //comprobar que la contraseña coincida
-            if (password_2 != password) {
-            conteo++;
-            return false;
-            }
-        }else{
-            myToast("Te has equivocado , reseteo de contraseña");
-            //Alerta para confirmar que quiera resetear la contraseña
-            alertDialog("Reinicio de contraseña", "¿Está seguro de resetear la contraseña?");
-            auth.sendPasswordResetEmail(email);
-            return false;
-        }
-        return true;
-    }
+
 
     public AlertDialog alertDialog(String title, String mensaje){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -145,4 +115,54 @@ public class RegisterActivity extends AppCompatActivity {
         return dialog;
 
     }
+
+    //PARTE AÑADIDA NUEVA
+    public void validate() {
+        email = txtEEmail.getText().toString().trim();
+        password = txtEPassword.getText().toString().trim();
+        confirmPassword = confirmarPassword.getText().toString().trim();
+
+        //esto lo que pone en rojo el email sino existe
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            txtEEmail.setError("Correo invalido");
+            return;
+        } else {
+            txtEEmail.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 8) {
+            txtEPassword.setError("Se necesitan 8 caracteres");
+            return;
+            //tiene q contener unnúmero la contraseña pero no me funciona asi q nada
+            //si no es la contraseña se manda como nulo
+        } else if (!Pattern.compile("[0-9]").matcher(password).find()) {
+            txtEPassword.setError("Introduzca algún número");
+            return;
+        } else {
+            txtEPassword.setError(null);
+        }
+        if (!confirmPassword.equals(password)) {
+                confirmarPassword.setError("Deben ser iguales");
+                return;
+        } else {
+                registro(email, password);
+        }
+    }
+
+    public void registro(String email,String password){
+        Fauth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(RegisterActivity.this,ChooseUserActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            myToast("Error al registrarse");
+                        }
+                    }
+                });
+    }
+
 }

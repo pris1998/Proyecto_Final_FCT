@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.proyecto.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ChooseUserActivity extends AppCompatActivity {
     Button btnDoctor;
     Button btnPaciente;
+    Button btnSalir ;
+
+    TextView bienvenidolabel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +25,15 @@ public class ChooseUserActivity extends AppCompatActivity {
 
         btnDoctor = findViewById(R.id.btnDoctor);
         btnPaciente = findViewById(R.id.btnPaciente);
+        btnSalir = findViewById(R.id.btnSalir);
+        bienvenidolabel = findViewById(R.id.bienvenidolabel);
+        //Si ya hay un usuario con inicio de sesion abierto
+        // se dirige directamente aqui
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            bienvenidolabel.setText(user.getDisplayName());
+        }
 
         btnDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +42,7 @@ public class ChooseUserActivity extends AppCompatActivity {
                 //alias al intent
                 intent_doctor.putExtra("Doctor usuario","mensaje");
                 startActivity(intent_doctor);
+                finish();
             }
         });
 
@@ -37,6 +53,18 @@ public class ChooseUserActivity extends AppCompatActivity {
                 //alias al intent
                 intent_paciente.putExtra("Paciente usuario","mensaje");
                 startActivity(intent_paciente);
+                finish();
+            }
+        });
+
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cierre de sesion de google
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(ChooseUserActivity.this,LoginActivity.class );
+                startActivity(intent);
+                finish();
             }
         });
 
