@@ -155,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-
     private ActivityResultLauncher<Intent> resultGoogleLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -185,26 +184,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
     );
-
-
-
-    private void firebaseAuthWithToken(String idToken){
-        //nos da las credenciales
-         AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
-         auth.signInWithCredential(credential)
-                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                     @Override
-                     public void onComplete(@NonNull Task<AuthResult> task) {
-                         if (task.isSuccessful()) {
-                             Intent intent = new Intent(LoginActivity.this,ChooseUserActivity.class );
-                             startActivity(intent);
-                             finish();
-                         }else{
-                             myToast("No se pudo iniciar sesión");
-                         }
-                     }
-                 });
-     }
 
 
     public void signInGoogle(){
