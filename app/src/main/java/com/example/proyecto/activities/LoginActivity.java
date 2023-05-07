@@ -1,5 +1,7 @@
 package com.example.proyecto.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -83,23 +85,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*
+
         //Google configuration
         signInButton = findViewById(R.id.loginGoogle);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerwithGoogle();
+                signInGoogle();
             }
         });
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.web_usuario_id))
-                .requestEmail()
-                .build();
 
-        signInClient = GoogleSignIn.getClient(this,gso);
-        */
 
         //Olvidaste contraseña
         txtOlvidarPassword.setOnClickListener(new View.OnClickListener() {
@@ -157,28 +153,41 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-     }
+    }
 
-    private void registerwithGoogle(){
-         Intent signInintent = signInClient.getSignInIntent();
-         startActivity(signInintent);
-         //startActivityForResult(signInintent,SIGN_IN);
 
-     }
-     @Override
-     public void onActivityResult(int requestCode,int resultCode ,Intent data ){
-        super.onActivityResult(requestCode, resultCode, data);
-         if (requestCode == SIGN_IN) {
-             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-             try{
-                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                 //llamamod una vez iniciada sesion nos da un resultado
-                 firebaseAuthWithToken(account.getIdToken());
-             }catch (ApiException exception){
-                myToast("Fallo de Google");
-             }
-         }
-     }
+    private ActivityResultLauncher<Intent> resultGoogleLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    try {
+                        GoogleSignInAccount account = task.getResult(ApiException.class);
+                        if (account != null) {
+                            AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+                            FirebaseAuth.getInstance().signInWithCredential(credential)
+                                    .addOnCompleteListener(this, task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            Intent intent = new Intent(this, ChooseUserActivity.class);
+                                            startActivity(intent);
+                                        } else {
+                                            myToast( "No se pudo iniciar sesión con Google.");
+                                        }
+                                    })
+                                    .addOnFailureListener(this, e -> {
+                                        myToast( "No se pudo iniciar sesión con Google.");
+                                    });
+                        }
+                    } catch (ApiException e) {
+                        myToast( "No se pudo iniciar sesión con Google.");
+                    }
+                }
+            }
+    );
+
+
+
     private void firebaseAuthWithToken(String idToken){
         //nos da las credenciales
          AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
@@ -196,4 +205,18 @@ public class LoginActivity extends AppCompatActivity {
                      }
                  });
      }
+
+
+    public void signInGoogle(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_usuario_id))
+                .requestEmail()
+                .build();
+
+        signInClient = GoogleSignIn.getClient(LoginActivity.this,gso);
+        signInClient.signOut();
+
+        resultGoogleLauncher.launch(signInClient.getSignInIntent());
     }
+    }
+
