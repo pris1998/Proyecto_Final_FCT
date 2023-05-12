@@ -5,70 +5,96 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import utils.Adapter;
+import utils.DataListPatients;
+
 public class DoctorActivity extends AppCompatActivity {
-    DrawerLayout drawerLayout;
-    NavigationView nav;
-    ActionBarDrawerToggle drawerToggle;
+    //el boton de add
+    FloatingActionButton btnfloating;
+    RecyclerView recyclerView;
+    List<DataListPatients> dataList;
+    //mirar el import a ver si es distinto
+    SearchView searchView;
+    Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        nav = findViewById(R.id.nav_view);
-        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open_nav, R.string.close_nav);
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //Esta parte sería con metodos a parte para cada celda del menu
-        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        btnfloating = findViewById(R.id.btnfloating);
+        recyclerView = findViewById(R.id.recyclerView);
+        searchView = findViewById(R.id.search);
+        searchView.clearFocus();
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(DoctorActivity.this, 1);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DoctorActivity.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_layout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        dataList = new ArrayList<>();
+
+        Adapter adapter = new Adapter(DoctorActivity.this,dataList);
+        recyclerView.setAdapter(adapter);
+
+        //Buscador de pacientes
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home:
-                    {
-                        Toast.makeText(DoctorActivity.this, "Ha selecionado HOME", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    case R.id.logout:
-                    {
-                        Toast.makeText(DoctorActivity.this, "Salir de la sesión", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    case R.id.vaccine:
-                    {
-                        Toast.makeText(DoctorActivity.this, "Vacunas", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
+            public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchList(newText);
+                return true;
+            }
         });
+        //aqui continua la base de datos que tnego q hacer
+        btnfloating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Esta debe abrir una actividad nueva para añadir cosas
+                //Intent intent = new Intent();
+            }
+        });
+
+
+
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
+    public void searchList(String text){
+        ArrayList<DataListPatients> searchList = new ArrayList<>();
+        for (DataListPatients dataListPatients : dataList) {
+            searchList.add(dataListPatients);
         }
-        return super.onOptionsItemSelected(item);
+        adapter.searchDataList(searchList);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
-        }
-    }
+
 }
