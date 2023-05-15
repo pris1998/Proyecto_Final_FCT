@@ -196,6 +196,7 @@ public class MemoryActivity extends AppCompatActivity {
                     toast.show();
                 }
 
+
             }else{
                handler.postDelayed(new Runnable() {
                    @Override
