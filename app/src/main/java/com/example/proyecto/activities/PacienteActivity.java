@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.proyecto.R;
+import com.example.proyecto.activities.minigames.AdivinaNumberActivity;
 import com.example.proyecto.activities.minigames.MemoryActivity;
 import com.example.proyecto.activities.minigames.TresEnRayaActivity;
 
@@ -71,7 +72,8 @@ public class PacienteActivity extends AppCompatActivity {
         adivina_numCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(PacienteActivity.this, AdivinaNumberActivity.class);
+                startActivity(intent);
             }
         });
 
