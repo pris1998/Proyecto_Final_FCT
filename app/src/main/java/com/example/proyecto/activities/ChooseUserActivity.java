@@ -13,6 +13,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ChooseUserActivity extends AppCompatActivity {
+
+
+
     Button btnDoctor;
     Button btnPaciente;
     Button btnSalir ;
@@ -29,6 +32,8 @@ public class ChooseUserActivity extends AppCompatActivity {
         bienvenidolabel = findViewById(R.id.bienvenidolabel);
         //Si ya hay un usuario con inicio de sesion abierto
         // se dirige directamente aqui
+
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -69,5 +74,13 @@ public class ChooseUserActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ChooseUserActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

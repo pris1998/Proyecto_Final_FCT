@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -35,13 +42,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText txtEEmail, txtEPassword, confirmarPassword;
 
+    TextInputEditText txtName;
+
     Button btnInicioS;
 
     String email ;
     String password;
     String confirmPassword;
+    String nombre_Usuario;
 
     private FirebaseAuth Fauth = FirebaseAuth.getInstance();
+
+
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
 
 
@@ -53,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         txtEEmail = findViewById(R.id.txtEEmail);
         txtEPassword = findViewById(R.id.txtEPassword);
         confirmarPassword = findViewById(R.id.confirmarPassword);
+        nombre_Usuario = String.valueOf((TextInputEditText) findViewById(R.id.txtName));
 
         btnInicioS = findViewById(R.id.btnInicioS);
         txtnewUser = findViewById(R.id.txtnewUser);
@@ -118,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //PARTE AÑADIDA NUEVA
     public void validate() {
+
         email = txtEEmail.getText().toString().trim();
         password = txtEPassword.getText().toString().trim();
         confirmPassword = confirmarPassword.getText().toString().trim();
@@ -145,7 +160,8 @@ public class RegisterActivity extends AppCompatActivity {
                 confirmarPassword.setError("Deben ser iguales");
                 return;
         } else {
-                registro(email, password);
+            registroBD(nombre_Usuario,email, password);
+            registro(email, password);
         }
     }
 
@@ -164,6 +180,35 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    //registro con la base de datos
+    public void registroBD(String name, String email,String password){
+        //Uso un HashMap porque es más facil ya que tiene un clave por (String)
+        // y un valor (Object) son los objetos que se guardan al ecribirlo mediante la pantalla de Registro
+        Map<String,Object> mapDatos = new HashMap<>();
+        mapDatos.put("name",name);
+        mapDatos.put("email",email);
+        mapDatos.put("password",password);
+        firebaseFirestore.collection("users").add(mapDatos).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                //Salga bien
+                myToast("Usuario creado");
+                //finaliza la activity
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                myToast("Usuario no creado");
+            }
+        });
+    }
+
+
+
+
 
     //Para volver hacia atrás
     @Override

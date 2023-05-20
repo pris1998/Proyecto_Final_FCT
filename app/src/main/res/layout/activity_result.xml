@@ -34,8 +34,7 @@
             android:backgroundTint="@color/white"
             android:text="Empezar de Nuevo"
             android:layout_margin="20dp"
-            android:textColor="@color/color_lauch"
-            android:cornerRadius = "20dp"/>
+            android:textColor="@color/color_lauch" />
 
 
     </LinearLayout>

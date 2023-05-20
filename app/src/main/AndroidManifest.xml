@@ -15,6 +15,13 @@
         android:theme="@style/Theme.Proyecto"
         tools:targetApi="31">
         <activity
+            android:name=".activities.doctores.DietaActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.minigames.ResultActivity"
             android:exported="false">
             <meta-data
@@ -36,7 +43,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.doctores.DietaActivity"
+            android:name=".activities.doctores.Dieta"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

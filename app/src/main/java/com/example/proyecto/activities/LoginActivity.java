@@ -32,6 +32,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Pattern;
 
@@ -57,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     public SignInButton signInButton;
     public GoogleSignInClient signInClient;
     public static final int SIGN_IN = 0;
+
+    //Conecte a la base de datos
+    FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,10 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //Conexión a la base de datos
+        mFirestore = FirebaseFirestore.getInstance();
+
     }
 
 
