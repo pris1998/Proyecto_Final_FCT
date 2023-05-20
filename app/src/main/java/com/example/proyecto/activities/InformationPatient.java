@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
-import com.example.proyecto.activities.doctores.DietaActivity;
+import com.example.proyecto.activities.doctores.Dieta;
 import com.google.android.material.navigation.NavigationView;
 
 public class InformationPatient extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class InformationPatient extends AppCompatActivity {
                     }
                     case R.id.vaccine:
                     {
-                        Intent intent = new Intent(InformationPatient.this, DietaActivity.class);
+                        Intent intent = new Intent(InformationPatient.this, Dieta.class);
                         startActivity(intent);
                         break;
                     }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.proyecto.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,16 @@ import utils.Adapter;
 import utils.DataListPatients;
 
 public class DoctorActivity extends AppCompatActivity {
+
+    //añadir informacion de la coleccin dieta
+    FirebaseController fc = new FirebaseController();
+
     //el boton de add
     FloatingActionButton btnfloating;
     RecyclerView recyclerView;
     List<DataListPatients> dataList;
     //mirar el import a ver si es distinto
-    SearchView searchView;
+    androidx.appcompat.widget.SearchView searchView;
     Adapter adapter;
 
 
@@ -50,11 +55,17 @@ public class DoctorActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(DoctorActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
+        //llamaa la función para añadir dietas
+        //fc.addDieta();
+        fc.addUsers();
+
+        /*
         AlertDialog.Builder builder = new AlertDialog.Builder(DoctorActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
         dialog.show();
+        finish();*/
 
         dataList = new ArrayList<>();
 
@@ -62,18 +73,9 @@ public class DoctorActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         //Buscador de pacientes
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        //searchView.setOnQueryTextListener
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                searchList(newText);
-                return true;
-            }
-        });
+
         //aqui continua la base de datos que tnego q hacer
         btnfloating.setOnClickListener(new View.OnClickListener() {
             @Override
