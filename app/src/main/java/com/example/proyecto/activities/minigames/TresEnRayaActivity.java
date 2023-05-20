@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.proyecto.R;
 
@@ -15,7 +17,7 @@ import java.util.Random;
 
 public class TresEnRayaActivity extends AppCompatActivity {
 
-
+    Button btn00, btn01 , btn02 ,btn03 , btn04 , btn05 ,btn06 , btn07 , btn08;
     private Integer[] casillas;
     int[] tablero = new int[]{
             0,0,0,
@@ -39,7 +41,7 @@ public class TresEnRayaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tres_en_raya);
 
         cargarCasillas();
-
+        inicializarCasillas();
 
     }
 
@@ -56,6 +58,78 @@ public class TresEnRayaActivity extends AppCompatActivity {
                 R.id.btn08,
         };
     }
+
+    private void inicializarCasillas(){
+        btn00 = findViewById(R.id.btn00);
+        btn01 = findViewById(R.id.btn01);
+        btn02 = findViewById(R.id.btn02);
+        btn03 = findViewById(R.id.btn03);
+        btn04 = findViewById(R.id.btn04);
+        btn05 = findViewById(R.id.btn05);
+        btn06 = findViewById(R.id.btn06);
+        btn07 = findViewById(R.id.btn07);
+        btn08 = findViewById(R.id.btn08);
+
+
+        btn00.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn04.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn06.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn07.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+        btn08.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerFicha(v);
+            }
+        });
+
+
+    }
+
+
     private void ponerFicha(View view){
         //estamos jugando
         if (estado == 0) {
@@ -67,15 +141,21 @@ public class TresEnRayaActivity extends AppCompatActivity {
                 tablero[numBtn] = 1;
                 conteoFichas += 1;
                 estado = comprobarEstadoCasillas();
+                terminarPartida();
                 if (estado == 0) {
                     turno = -1;
                     generarPosicionAleatoria();
                     conteoFichas +=1;
                     estado = comprobarEstadoCasillas();
+                    //cuando haya puesto ficha la maquina
+                    terminarPartida();
                 }
             }
         }
     }
+
+
+
     public void generarPosicionAleatoria(){
         Random random = new Random();
         int pos = random.nextInt(tablero.length);
@@ -91,7 +171,12 @@ public class TresEnRayaActivity extends AppCompatActivity {
         //habara terminado yo o la maquina
         if (estado == 1 || estado == -1) {
             if (estado == 1) {
-                //texto de has ganado
+                //texto de has ganado , cambiar con cuadro personalizado
+                myToast("Has ganado ;) ");
+
+            }else{
+                //texto de has perdido, cambiar con cuadro personalizado
+                myToast("Has perdido ;(");
 
             }
         }else if (estado == 2) {
@@ -99,6 +184,8 @@ public class TresEnRayaActivity extends AppCompatActivity {
             ResultActivity resultDialog = new ResultActivity(TresEnRayaActivity.this,"Empate",TresEnRayaActivity.this);
             resultDialog.setCancelable(false);
             resultDialog.show();
+            //mensaje provisional
+            myToast("Has empatado ;(");
         }
 
     }
@@ -135,7 +222,10 @@ public class TresEnRayaActivity extends AppCompatActivity {
         }else if(conteoFichas == 9){ //Caso de empate
             newEstado = 2;
         }
-
         return newEstado;
+    }
+
+    public  void myToast(String msg){
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
 }
