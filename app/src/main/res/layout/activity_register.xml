@@ -13,6 +13,7 @@
         android:layout_width="350dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
+        android:layout_marginTop="0dp"
         app:srcCompat="@drawable/register_app" />
 
     <TextView
@@ -25,24 +26,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="491dp"
+        android:layout_height="400dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="60dp"
         android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtNameUser"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Nombre completo">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtName" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/registertxtEEmail"

@@ -2,10 +2,8 @@
 <resources>
    <style name="Proyecto" parent="Theme.AppCompat.Light.NoActionBar">
 
-      <item name="colorPrimary">@color/color_lauch</item>
+      <item name="colorPrimary">@color/color_launch</item>
       <item name="colorPrimaryDark">@color/color_launch2</item>
-      <item name="colorAccent">@color/color_launch3</item>
-
 
    </style>
 

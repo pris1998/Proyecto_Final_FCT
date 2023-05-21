@@ -3,6 +3,14 @@
     <string name="web_usuario_id">218138409504-id9j8pdmoo96ut1mbj0scjs2kpi7bohl.apps.googleusercontent.com</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <!--Elementos de la pizarra de dibujo -->
+    <string name="start_new">New</string>
+    <string name="brush">Brush</string>
+    <string name="erase">Erase</string>
+    <string name="save">Save</string>
+    <string name="paint">Paint</string>
 
-
+    <string name="sml">Small</string>
+    <string name="med">Medium</string>
+    <string name="lrg">Large</string>
 </resources>

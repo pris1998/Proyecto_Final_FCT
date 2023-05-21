@@ -66,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
         txtEEmail = findViewById(R.id.txtEEmail);
         txtEPassword = findViewById(R.id.txtEPassword);
         confirmarPassword = findViewById(R.id.confirmarPassword);
-        nombre_Usuario = String.valueOf((TextInputEditText) findViewById(R.id.txtName));
 
         btnInicioS = findViewById(R.id.btnInicioS);
         txtnewUser = findViewById(R.id.txtnewUser);
@@ -194,14 +193,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 //Salga bien
-                myToast("Usuario creado");
+                myToast("Usuario creado en BD");
                 //finaliza la activity
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                myToast("Usuario no creado");
+                myToast("Error al registrar usuario");
             }
         });
     }

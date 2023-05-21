@@ -74,7 +74,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_font2">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,7 +83,7 @@
                         android:id="@+id/memoryName"
                         android:text="Memory"
                         android:textSize="20dp"
-                        android:textColor="@color/color_lauch"
+                        android:textColor="@color/color_text2"
                         android:fontFamily="@font/poppins_semibold"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
@@ -104,7 +105,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/quizCard"
+                android:id="@+id/pizarraCard"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 app:cardElevation="20dp"
@@ -112,25 +113,27 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_font2"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/quizName"
-                        android:text="Quiz"
+                        android:id="@+id/pizarraName"
+                        android:text="Pizarra"
                         android:textSize="20dp"
-                        android:textColor="@color/color_lauch"
+                        android:textColor="@color/color_text2"
                         android:fontFamily="@font/poppins_semibold"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/quizImage"/>
+                        android:layout_below="@+id/pizarraImage"/>
 
                     <ImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:id="@+id/quizImage"
-                        android:src="@drawable/icon_quiz"
+                        android:id="@+id/pizarraImage"
+                        android:src="@drawable/icon_pizarra"
                         android:layout_marginTop="15dp"
                         android:layout_centerHorizontal="true"/>
 
@@ -164,7 +167,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_font2">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -172,7 +176,7 @@
                         android:id="@+id/tres_en_rayaName"
                         android:text="Tres en Raya"
                         android:textSize="20dp"
-                        android:textColor="@color/color_lauch"
+                        android:textColor="@color/color_text2"
                         android:fontFamily="@font/poppins_semibold"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
@@ -202,7 +206,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_font2">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -210,7 +215,7 @@
                         android:id="@+id/adivina_numName"
                         android:text="Adivina el número"
                         android:textSize="18dp"
-                        android:textColor="@color/color_lauch"
+                        android:textColor="@color/color_text2"
                         android:fontFamily="@font/poppins_semibold"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"

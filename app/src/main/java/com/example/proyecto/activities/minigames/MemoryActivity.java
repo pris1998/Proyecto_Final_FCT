@@ -31,9 +31,7 @@ public class MemoryActivity extends AppCompatActivity {
 
     //Botones
     Button btnReiniciar, btnSalir;
-    TextView txtPuntuacion;
 
-    public int puntuacion;
     public int aciertos;
 
     //Array para las imagenes son 7 y el fondo
@@ -125,12 +123,6 @@ public class MemoryActivity extends AppCompatActivity {
         });
     }
 
-    private void cargarPuntuacion(){
-        txtPuntuacion = findViewById(R.id.txtPuntuacion);
-        puntuacion = 0;
-        aciertos = 0;
-        txtPuntuacion.setText("Puntución: " + puntuacion);
-    }
 
     private void cargarImagenes(){
         imagenes = new int[]{
@@ -188,15 +180,11 @@ public class MemoryActivity extends AppCompatActivity {
                 first = null;
                 bloqueado = false;//ya se puede seguir pulsado los demás números
                 aciertos++;
-                puntuacion++;
-                txtPuntuacion.setText("Puntuación: "+ puntuacion);
                 //comprobar si hemos ganado al hacertar todas las imagenes
                 if (aciertos == imagenes.length) {
-                    Toast toast = Toast.makeText(getApplicationContext(),"Has ganado", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(),"Has completado el panel", Toast.LENGTH_LONG);
                     toast.show();
                 }
-
-
             }else{
                handler.postDelayed(new Runnable() {
                    @Override
@@ -223,7 +211,7 @@ public class MemoryActivity extends AppCompatActivity {
     private void init(){
         cargarTablero();
         cargarBotones();
-        cargarPuntuacion();
+
         cargarImagenes();
         //CREACIÓN DEL ARRAY DESORDENADO
         arrayAleatorio = arrayBarajar(imagenes.length);

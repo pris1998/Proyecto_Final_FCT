@@ -11,11 +11,12 @@ import android.view.View;
 import com.example.proyecto.R;
 import com.example.proyecto.activities.minigames.AdivinaNumberActivity;
 import com.example.proyecto.activities.minigames.MemoryActivity;
+import com.example.proyecto.activities.minigames.PizarraActivity;
 import com.example.proyecto.activities.minigames.TresEnRayaActivity;
 
 public class PacienteActivity extends AppCompatActivity {
 
-    CardView memoryCard, quizCard , tres_en_rayaCard, adivina_numCard;
+    CardView memoryCard, pizarra , tres_en_rayaCard, adivina_numCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class PacienteActivity extends AppCompatActivity {
 
         tres_en_rayaCard = findViewById(R.id.tres_en_rayaCard);
 
-        quizCard = findViewById(R.id.quizCard);
+        pizarra = findViewById(R.id.pizarraCard);
 
         adivina_numCard = findViewById(R.id.adivina_numCard);
 
@@ -62,10 +63,11 @@ public class PacienteActivity extends AppCompatActivity {
             }
         });
 
-        quizCard.setOnClickListener(new View.OnClickListener() {
+        pizarra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(PacienteActivity.this, PizarraActivity.class);
+                startActivity(intent);
             }
         });
 
