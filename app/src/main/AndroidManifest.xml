@@ -32,13 +32,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.doctores.DietaActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.minigames.ResultActivity"
             android:exported="false">
             <meta-data
@@ -74,13 +67,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.InformationPatient"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.ForgotPasswordActivity"
             android:exported="false">
             <meta-data
@@ -89,13 +75,6 @@
         </activity>
         <activity
             android:name=".activities.PacienteActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.DoctorActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -118,13 +97,6 @@
         <activity
             android:name=".activities.PortadaActivity"
             android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.ChooseUserActivity"
-            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

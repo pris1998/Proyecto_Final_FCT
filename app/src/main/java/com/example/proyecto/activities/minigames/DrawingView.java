@@ -29,8 +29,11 @@ public class DrawingView extends View {
     //canvas bitmap
     private Bitmap canvasBitmap;
 
+    //brusSize (tamaño pincel) y lastBrushSize(seguimiento del último tamaño de pincel )
     private float brushSize, lastBrushSize;
+    //Borrado
     private boolean erase=false;
+
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,16 +60,29 @@ public class DrawingView extends View {
     }
 
     public void setBrushSize(float newSize){
+        //update size
         float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 newSize, getResources().getDisplayMetrics());
         brushSize=pixelAmount;
         drawPaint.setStrokeWidth(brushSize);
     }
+
     public void setLastBrushSize(float lastSize){
         lastBrushSize=lastSize;
     }
     public float getLastBrushSize(){
         return lastBrushSize;
+    }
+
+    public void setErase(boolean isErase){
+        //set erase true or false
+        erase=isErase;
+        if(erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        else drawPaint.setXfermode(null);
+    }
+    public void startNew(){
+        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        invalidate();
     }
 
     @Override
@@ -78,6 +94,7 @@ public class DrawingView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
     }
@@ -145,15 +162,4 @@ public class DrawingView extends View {
         drawPaint.setColor(paintColor);
     }
 
-    public void setErase(boolean isErase){
-        erase=isErase;
-        if(erase){
-            drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        }
-        else drawPaint.setXfermode(null);
-    }
-    public void startNew(){
-        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
-        invalidate();
-    }
 }

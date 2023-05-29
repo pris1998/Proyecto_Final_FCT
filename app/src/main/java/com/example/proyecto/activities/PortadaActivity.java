@@ -50,7 +50,7 @@ public class PortadaActivity extends AppCompatActivity {
                 //Si el usuario ya inicio sesioncon Google
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(PortadaActivity.this);
                 if (user != null && account != null) {
-                    Intent intent = new Intent(PortadaActivity.this,ChooseUserActivity.class );
+                    Intent intent = new Intent(PortadaActivity.this,PacienteActivity.class );
                     startActivity(intent);
                     finish();
                 }else{

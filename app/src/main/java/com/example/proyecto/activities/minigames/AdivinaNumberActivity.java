@@ -32,7 +32,6 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         btnComprobar = findViewById(R.id.btnComprobar);
         btnReinicio = findViewById(R.id.btnReinicio);
 
-
         btnReinicio.setEnabled(false);
 
         //metodo que crea el numer aleatorio
@@ -46,7 +45,7 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                 //convierte a entero
                 numUser = Integer.parseInt(txtNumber.getText().toString());
                 //se comprueba que este el numero entre los rangos y no sean cosas distintas
-                if (numUser <0 || numUser > 100 ) {
+                if (numUser <0 || numUser > 50 ) {
                     txtMensaje.setText("No es un número correcto");
                 //ayudas para el usuario
                 }else if (numUser > numAleatorio) {
@@ -64,14 +63,14 @@ public class AdivinaNumberActivity extends AppCompatActivity {
 
                 //la parte de la puntuacion
                 intento = intento -1 ;
-                txtMensaje2.setText("Le quedan " + intento + " vidas restantes");
+                txtMensaje2.setText("Le quedan " + intento + " intentos restantes");
 
                 //si los intentdo acaban = PIERDES
                 if (intento == 0 && numAleatorio != numUser) {
                     btnComprobar.setEnabled(false);
                     btnReinicio.setEnabled(true);
                     txtMensaje.setText("Perdiste");
-                    txtTitle.setText("El número correcto :" + numAleatorio);
+                    txtTitle.setText("El número correcto [0-50]:" + numAleatorio);
                 }
             }
         });
@@ -92,7 +91,7 @@ public class AdivinaNumberActivity extends AppCompatActivity {
 
     private int crearNumAleatorio(){
         //devuelve un número generado aleatoriamente entre (1 y 100)
-        return (int) (Math.random()*100+1);
+        return (int) (Math.random()*50+1);
     }
 
 }

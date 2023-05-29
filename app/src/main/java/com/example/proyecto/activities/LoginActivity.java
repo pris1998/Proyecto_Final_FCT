@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this,ChooseUserActivity.class );
+                            Intent intent = new Intent(LoginActivity.this,PacienteActivity.class );
                             startActivity(intent);
                             finish();
                         }else{
@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseAuth.getInstance().signInWithCredential(credential)
                                     .addOnCompleteListener(this, task1 -> {
                                         if (task1.isSuccessful()) {
-                                            Intent intent = new Intent(this, ChooseUserActivity.class);
+                                            Intent intent = new Intent(this, PacienteActivity.class);
                                             startActivity(intent);
                                         } else {
                                             myToast( "No se pudo iniciar sesión con Google.");
@@ -205,5 +205,7 @@ public class LoginActivity extends AppCompatActivity {
 
         resultGoogleLauncher.launch(signInClient.getSignInIntent());
     }
+
+
     }
 
