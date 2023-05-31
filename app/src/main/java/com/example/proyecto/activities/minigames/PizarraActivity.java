@@ -55,6 +55,7 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
 
     }
     public void paintClicked(View view){
+        drawView.setErase(false);
         //use chosen color
         if(view!=currPaint){
             //update color
@@ -64,6 +65,8 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
             imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed, getApplicationContext().getTheme()));
             currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint, getApplicationContext().getTheme()));
             currPaint=(ImageButton)view;
+            //Vuelva a ajustar el tamaño del pincel al último utilizado al dibujar en lugar de borrar:
+            drawView.setBrushSize(drawView.getLastBrushSize());
         }
     }
 
@@ -124,52 +127,52 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void tamanioGoma(){
-        final Dialog brushDialog = new Dialog(this);
-        brushDialog.setTitle("Tamaño goma:");
-        brushDialog.setContentView(R.layout.brush_chooser);
+        final Dialog gomaDialog = new Dialog(this);
+        gomaDialog.setTitle("Tamaño goma:");
+        gomaDialog.setContentView(R.layout.brush_chooser);
 
-        ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
+        ImageButton smallBtn = (ImageButton)gomaDialog.findViewById(R.id.small_brush);
         smallBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 drawView.setErase(true);
                 drawView.setBrushSize(smallBrush);
-                brushDialog.dismiss();
+                gomaDialog.dismiss();
             }
         });
-        ImageButton mediumBtn = (ImageButton)brushDialog.findViewById(R.id.medium_brush);
+        ImageButton mediumBtn = (ImageButton)gomaDialog.findViewById(R.id.medium_brush);
         mediumBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 drawView.setErase(true);
                 drawView.setBrushSize(mediumBrush);
-                brushDialog.dismiss();
+                gomaDialog.dismiss();
             }
         });
-        ImageButton largeBtn = (ImageButton)brushDialog.findViewById(R.id.large_brush);
+        ImageButton largeBtn = (ImageButton)gomaDialog.findViewById(R.id.large_brush);
         largeBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 drawView.setErase(true);
                 drawView.setBrushSize(largeBrush);
-                brushDialog.dismiss();
+                gomaDialog.dismiss();
             }
         });
-        brushDialog.show();
+        gomaDialog.show();
     }
 
     public void nuevoDibujo(){
         //new button
         AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
-        newDialog.setTitle("New drawing");
-        newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
-        newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+        newDialog.setTitle("Nuevo dibujo");
+        newDialog.setMessage("Comience un nuevo dibujo(quiere perder el anterior)?");
+        newDialog.setPositiveButton("Si", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 drawView.startNew();
                 dialog.dismiss();
             }
         });
-        newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        newDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 dialog.cancel();
             }
@@ -179,29 +182,29 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
 
     public void guardarDibujo(){
         AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
-        saveDialog.setTitle("Save drawing");
-        saveDialog.setMessage("Save drawing to device Gallery?");
-        saveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+        saveDialog.setTitle("Dibujo guardado");
+        saveDialog.setMessage("Quiere guardar el dibujo en la galería?");
+        saveDialog.setPositiveButton("Si", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 //save drawing
                 drawView.setDrawingCacheEnabled(true);
                 String imgSaved = MediaStore.Images.Media.insertImage(
                         getContentResolver(), drawView.getDrawingCache(),
-                        UUID.randomUUID().toString()+".png", "drawing");
+                        UUID.randomUUID().toString()+".png", "dibujo");
                 if(imgSaved!=null){
                     Toast savedToast = Toast.makeText(getApplicationContext(),
-                            "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
+                            "Dibujo guardado!", Toast.LENGTH_SHORT);
                     savedToast.show();
                 }
                 else{
                     Toast unsavedToast = Toast.makeText(getApplicationContext(),
-                            "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
+                            "No se ha podido guardar.", Toast.LENGTH_SHORT);
                     unsavedToast.show();
                 }
                 drawView.destroyDrawingCache();
             }
         });
-        saveDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        saveDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 dialog.cancel();
             }

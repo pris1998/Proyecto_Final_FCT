@@ -70,12 +70,12 @@ public class DrawingView extends View {
     public void setLastBrushSize(float lastSize){
         lastBrushSize=lastSize;
     }
+    //Obtine el ultimo pincel usado
     public float getLastBrushSize(){
         return lastBrushSize;
     }
 
     public void setErase(boolean isErase){
-        //set erase true or false
         erase=isErase;
         if(erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         else drawPaint.setXfermode(null);
@@ -133,7 +133,8 @@ public class DrawingView extends View {
         // Establecer las dimensiones medidas de la vista
         setMeasuredDimension(width, height);
     }
-
+    //El usuario al tocar la pantalla puede tocarla en cualquier lado ,
+    // sigue el movimiento del usuario con el dedo
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float touchX = event.getX();
