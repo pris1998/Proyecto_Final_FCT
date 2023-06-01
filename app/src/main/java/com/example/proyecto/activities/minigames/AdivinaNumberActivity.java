@@ -99,6 +99,7 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                 btnReinicio.setEnabled(false);
                 txtNumber.setText("");
                 txtMensaje.setText("");
+
             }
         });
     }
