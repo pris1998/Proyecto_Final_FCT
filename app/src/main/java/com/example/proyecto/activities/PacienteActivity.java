@@ -1,12 +1,17 @@
 package com.example.proyecto.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.proyecto.R;
 import com.example.proyecto.activities.minigames.AdivinaNumberActivity;
@@ -15,13 +20,14 @@ import com.example.proyecto.activities.minigames.PizarraActivity;
 import com.example.proyecto.activities.minigames.TresEnRayaActivity;
 
 public class PacienteActivity extends AppCompatActivity {
-
+    private ScrollView linearLayout;
     CardView memoryCard, pizarra , tres_en_rayaCard, adivina_numCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paciente);
+        linearLayout = (ScrollView) findViewById(R.id.root_paciente) ;
 
         memoryCard = findViewById(R.id.memoryCard);
 
@@ -79,5 +85,26 @@ public class PacienteActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Código del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Construye la vista donde se va a colocar el menu
+        getMenuInflater().inflate(R.menu.navigator_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId){
+            case R.id.Item_menusalir:
+                Intent intent_salir = new Intent(PacienteActivity.this, LoginActivity.class);
+                startActivity(intent_salir);
+                break;
+        }
+        return true;
     }
 }

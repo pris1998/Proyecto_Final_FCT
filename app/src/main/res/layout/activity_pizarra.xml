@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC"
     android:orientation="vertical"
+    android:id="@+id/root_pizarra"
     tools:context=".activities.minigames.PizarraActivity">
 
     <LinearLayout

@@ -1,10 +1,14 @@
 package com.example.proyecto.activities.minigames;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,14 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
+import com.example.proyecto.activities.LoginActivity;
+import com.example.proyecto.activities.PacienteActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class MemoryActivity extends AppCompatActivity {
-
-
+    //Menu cerrar sesión
+    private LinearLayout constraintLayout;
     //Fila 1
     ImageButton btn00, btn0A ,btn0B ,btn0C;
     //Fila 2
@@ -34,7 +40,7 @@ public class MemoryActivity extends AppCompatActivity {
     ImageButton[] tablero = new ImageButton[16];
 
     //Botones
-    Button btnReiniciar, btnSalir;
+    Button btnReiniciar ;
 
     public int aciertos;
 
@@ -56,6 +62,7 @@ public class MemoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
+        constraintLayout = (LinearLayout) findViewById(R.id.root_memory);
         init();
     }
 
@@ -108,7 +115,7 @@ public class MemoryActivity extends AppCompatActivity {
 
     public void cargarBotones(){
         btnReiniciar = findViewById(R.id.btnReiniciar);
-        btnSalir = findViewById(R.id.btnSalir);
+
 
         //Reinicia el tablero
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
@@ -118,13 +125,6 @@ public class MemoryActivity extends AppCompatActivity {
             }
         });
 
-        //Sale del minijuego
-        btnSalir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 
@@ -260,7 +260,28 @@ public class MemoryActivity extends AppCompatActivity {
             });
         }
     }
+    //Código del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Construye la vista donde se va a colocar el menu
+        getMenuInflater().inflate(R.menu.navigator_menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
 
-
+        switch (itemId){
+            case R.id.Item_home:
+                Intent intent_home = new Intent(MemoryActivity.this, PacienteActivity.class);
+                startActivity(intent_home);
+                break;
+            case R.id.Item_menusalir:
+                Intent intent_salir = new Intent(MemoryActivity.this, LoginActivity.class);
+                startActivity(intent_salir);
+                break;
+        }
+        return true;
+    }
 }

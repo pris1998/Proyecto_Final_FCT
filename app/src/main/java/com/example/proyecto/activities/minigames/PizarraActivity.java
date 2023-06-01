@@ -1,15 +1,21 @@
 package com.example.proyecto.activities.minigames;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyecto.R;
+import com.example.proyecto.activities.LoginActivity;
+import com.example.proyecto.activities.PacienteActivity;
 
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -19,6 +25,7 @@ import java.util.UUID;
 
 
 public class PizarraActivity extends AppCompatActivity implements View.OnClickListener {
+    private LinearLayout constraintLayout;
     private DrawingView drawView;
     //la elección del color de la paleta
     private ImageButton currPaint , drawBtn, eraseBtn, newBtn, saveBtn;
@@ -30,6 +37,7 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pizarra);
+        constraintLayout = (LinearLayout)findViewById(R.id.root_pizarra);
 
         drawView = (DrawingView)findViewById(R.id.dibujo);
         LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors);
@@ -210,6 +218,31 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
         saveDialog.show();
+    }
+
+    //Código del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Construye la vista donde se va a colocar el menu
+        getMenuInflater().inflate(R.menu.navigator_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId){
+            case R.id.Item_home:
+                Intent intent_home = new Intent(PizarraActivity.this, PacienteActivity.class);
+                startActivity(intent_home);
+                break;
+            case R.id.Item_menusalir:
+                Intent intent_salir = new Intent(PizarraActivity.this, LoginActivity.class);
+                startActivity(intent_salir);
+                break;
+        }
+        return true;
     }
 
 

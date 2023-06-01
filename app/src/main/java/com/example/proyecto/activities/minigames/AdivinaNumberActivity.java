@@ -1,17 +1,26 @@
 package com.example.proyecto.activities.minigames;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
+import com.example.proyecto.activities.LoginActivity;
+import com.example.proyecto.activities.PacienteActivity;
 
 public class AdivinaNumberActivity extends AppCompatActivity {
+    private ConstraintLayout constraintLayout;
     TextView textNumSelect, txtMensaje, txtMensaje2, txtTitle;
     EditText txtNumber;
     Button btnComprobar, btnReinicio;
@@ -23,6 +32,8 @@ public class AdivinaNumberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adivina_number);
+        constraintLayout = (ConstraintLayout) findViewById(R.id.root_adivinanumero);
+
 
         textNumSelect = findViewById(R.id.textNumSelect);
         txtNumber = findViewById(R.id.txtNumber);
@@ -92,6 +103,31 @@ public class AdivinaNumberActivity extends AppCompatActivity {
     private int crearNumAleatorio(){
         //devuelve un número generado aleatoriamente entre (1 y 100)
         return (int) (Math.random()*50+1);
+    }
+
+    //Código del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Construye la vista donde se va a colocar el menu
+        getMenuInflater().inflate(R.menu.navigator_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId){
+            case R.id.Item_home:
+                Intent intent_home = new Intent(AdivinaNumberActivity.this, PacienteActivity.class);
+                startActivity(intent_home);
+                break;
+            case R.id.Item_menusalir:
+                Intent intent_salir = new Intent(AdivinaNumberActivity.this, LoginActivity.class);
+                startActivity(intent_salir);
+                break;
+        }
+        return true;
     }
 
 }

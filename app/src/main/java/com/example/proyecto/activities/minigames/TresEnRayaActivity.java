@@ -1,19 +1,28 @@
 package com.example.proyecto.activities.minigames;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
 
 import com.example.proyecto.R;
+import com.example.proyecto.activities.LoginActivity;
+import com.example.proyecto.activities.PacienteActivity;
 
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class TresEnRayaActivity extends AppCompatActivity {
+    private RelativeLayout constraintLayout;
 
     Button btn00, btn01 , btn02 ,btn03 , btn04 , btn05 ,btn06 , btn07 , btn08;
     private Integer[] casillas;
@@ -36,6 +45,7 @@ public class TresEnRayaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tres_en_raya);
+        constraintLayout = (RelativeLayout) findViewById(R.id.root_tresenraya);
 
         cargarCasillas();
         inicializarCasillas();
@@ -216,6 +226,32 @@ public class TresEnRayaActivity extends AppCompatActivity {
             newEstado = 2;
         }
         return newEstado;
+    }
+
+
+    //Código del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Construye la vista donde se va a colocar el menu
+        getMenuInflater().inflate(R.menu.navigator_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId){
+            case R.id.Item_home:
+                Intent intent_home = new Intent(TresEnRayaActivity.this, PacienteActivity.class);
+                startActivity(intent_home);
+                break;
+            case R.id.Item_menusalir:
+                Intent intent_salir = new Intent(TresEnRayaActivity.this, LoginActivity.class);
+                startActivity(intent_salir);
+                break;
+        }
+        return true;
     }
 
 }
