@@ -21,7 +21,7 @@ import com.example.proyecto.activities.PacienteActivity;
 
 public class AdivinaNumberActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
-    TextView textNumSelect, txtMensaje, txtMensaje2, txtTitle;
+    TextView textNumSelect, txtMensaje, txtMensaje2;
     EditText txtNumber;
     Button btnComprobar, btnReinicio;
     private int numAleatorio;
@@ -39,7 +39,7 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         txtNumber = findViewById(R.id.txtNumber);
         txtMensaje = findViewById(R.id.txtMensaje);
         txtMensaje2 = findViewById(R.id.txtMensaje2);
-        txtTitle = findViewById(R.id.txtTitle);
+
         btnComprobar = findViewById(R.id.btnComprobar);
         btnReinicio = findViewById(R.id.btnReinicio);
 
@@ -69,7 +69,9 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                     btnComprobar.setEnabled(false);
                     //activa para empezar de nuevo
                     btnReinicio.setEnabled(true);
-                    txtTitle.setText("Has acertado. El número ganador es:" + numAleatorio);
+                    ResultNumeros result = new ResultNumeros(AdivinaNumberActivity.this,"Has acertado. El número ganador es:" + numAleatorio,AdivinaNumberActivity.this);
+                    result.show();
+
                 }
 
                 //la parte de la puntuacion
@@ -81,7 +83,9 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                     btnComprobar.setEnabled(false);
                     btnReinicio.setEnabled(true);
                     txtMensaje.setText("Perdiste");
-                    txtTitle.setText("El número correcto [0-50]:" + numAleatorio);
+                    ResultNumeros result = new ResultNumeros(AdivinaNumberActivity.this,"El número correcto :" + numAleatorio,AdivinaNumberActivity.this);
+                    result.show();
+
                 }
             }
         });
@@ -95,7 +99,6 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                 btnReinicio.setEnabled(false);
                 txtNumber.setText("");
                 txtMensaje.setText("");
-                txtTitle.setText("");
             }
         });
     }
