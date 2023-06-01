@@ -16,6 +16,7 @@ public class ResultActivity extends Dialog {
     private final String mensaje;
     private final TresEnRayaActivity tresEnRayaActivity;
 
+
     public ResultActivity(@NonNull Context context, String mensaje, TresEnRayaActivity tresEnRayaActivity) {
         super(context);
         this.mensaje = mensaje;

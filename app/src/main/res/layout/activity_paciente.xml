@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:forceDarkAllowed = "false"
     tools:context=".activities.PacienteActivity">
 
 
@@ -18,26 +20,13 @@
             android:layout_height="57dp"
             android:id="@+id/minigameName"
             android:text="Minijuegos"
-            android:textSize="38dp"
+            android:textSize="35dp"
             android:textColor="@color/black"
             android:layout_marginStart="1dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/poppins_semibold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/gameImage" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/minigameDesc"
-            android:text="Diferentes minijuegos
-            para divertirte"
-            android:textSize="14dp"
-            android:layout_marginStart="18dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/minigameName"
             app:layout_constraintEnd_toStartOf="@+id/gameImage" />
 
 
@@ -49,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="0dp"
-            app:layout_constraintStart_toEndOf="@+id/minigameDesc" />
+            app:layout_constraintStart_toEndOf="@+id/minigameName" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -74,7 +63,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="145dp"
                     android:background="@color/color_font2">
 
                     <TextView
@@ -94,7 +83,7 @@
                         android:layout_height="70dp"
                         android:id="@+id/memoryImage"
                         android:src="@drawable/iconmemory"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"/>
 
 
@@ -113,7 +102,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="145dp"
                     android:background="@color/color_font2"
                     >
 
@@ -167,7 +156,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="145dp"
                     android:background="@color/color_font2">
 
                     <TextView
@@ -206,20 +195,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="145dp"
                     android:background="@color/color_font2">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/adivina_numName"
-                        android:text="Adivina el número"
-                        android:textSize="18dp"
+                        android:text="Números"
+                        android:textSize="20dp"
                         android:textColor="@color/color_text2"
                         android:fontFamily="@font/poppins_semibold"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/adivina_numImage"/>
+
 
                     <ImageView
                         android:layout_width="70dp"

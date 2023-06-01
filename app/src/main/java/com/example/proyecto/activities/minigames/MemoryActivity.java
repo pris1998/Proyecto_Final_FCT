@@ -1,6 +1,7 @@
 package com.example.proyecto.activities.minigames;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class MemoryActivity extends AppCompatActivity {
+
+
     //Fila 1
     ImageButton btn00, btn0A ,btn0B ,btn0C;
     //Fila 2
@@ -256,4 +260,7 @@ public class MemoryActivity extends AppCompatActivity {
             });
         }
     }
+
+
+
 }

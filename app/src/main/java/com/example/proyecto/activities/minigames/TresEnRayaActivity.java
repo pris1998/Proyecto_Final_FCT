@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
+import com.example.proyecto.databinding.ActivityMemoryBinding;
 
 import org.checkerframework.common.returnsreceiver.qual.This;
 
@@ -27,12 +28,11 @@ public class TresEnRayaActivity extends AppCompatActivity {
     int estado = 0;
     int conteoFichas = 0;
     //indica quien está poniendo ficha
-    int turno = 1;
-    //l¡posiciones ganadoras
+    int turnoJugadorUno = 1;
+    //posiciones ganadoras
     //cuando sea -1 aun no hay ganador
     int[] posGana = new int[]{-1};
 
-    //formas de victoria se puede hacer con bucle anidado
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +132,7 @@ public class TresEnRayaActivity extends AppCompatActivity {
     private void ponerFicha(View view){
         //estamos jugando
         if (estado == 0) {
-            turno = 1;
+            turnoJugadorUno = 1;
             int numBtn = Arrays.asList(casillas).indexOf(view.getId());
             //si la ficha ya está colocada no se pone ahi (no se superpone)
             if (tablero[numBtn] == 0) {
@@ -141,10 +141,8 @@ public class TresEnRayaActivity extends AppCompatActivity {
                 conteoFichas += 1;
                 estado = comprobarEstadoCasillas();
                 terminarPartida();
-
-
                 if (estado == 0) {
-                    turno = -1;
+                    turnoJugadorUno = -1;
                     generarPosicionAleatoria();
                     conteoFichas +=1;
                     estado = comprobarEstadoCasillas();
@@ -155,8 +153,6 @@ public class TresEnRayaActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void generarPosicionAleatoria(){
         Random random = new Random();
         int pos = random.nextInt(tablero.length);
@@ -164,6 +160,7 @@ public class TresEnRayaActivity extends AppCompatActivity {
             pos = random.nextInt(tablero.length);
         }
         Button btn = (Button) findViewById(casillas[pos]);
+        btn.setBackgroundResource(R.drawable.background_turn);
         btn.setBackgroundResource(R.drawable.circulo);
         tablero[pos] = -1;
     }
@@ -173,19 +170,17 @@ public class TresEnRayaActivity extends AppCompatActivity {
         if (estado == 1 || estado == -1) {
             if (estado == 1) {
                 //texto de has ganado , cambiar con cuadro personalizado
-                myToast("Has ganado ;) ");
+                ResultActivity result = new ResultActivity(TresEnRayaActivity.this,"Has ganado",TresEnRayaActivity.this);
+                result.show();
             }else{
                 //texto de has perdido, cambiar con cuadro personalizado
-                myToast("Has perdido ;(");
+                ResultActivity result = new ResultActivity(TresEnRayaActivity.this,"Has perdido",TresEnRayaActivity.this);
+                result.show();
             }
         }else if (estado == 2) {
             //hemos empatado
-            ResultActivity resultDialog = new ResultActivity(TresEnRayaActivity.this,"Empate",TresEnRayaActivity.this);
-            resultDialog.setCancelable(false);
-            resultDialog.show();
-
-            //mensaje provisional
-            myToast("Has empatado ;(");
+            ResultActivity result = new ResultActivity(TresEnRayaActivity.this,"Empate",TresEnRayaActivity.this);
+            result.show();
         }
 
     }
@@ -197,35 +192,32 @@ public class TresEnRayaActivity extends AppCompatActivity {
             //siempre que gane
             posGana = new int[]{0,1,2};
             //gana tanto yo como la maquina
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[3]+tablero[4]+tablero[5]) ==3) {
             posGana = new int[]{3,4,5};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[6]+tablero[7]+tablero[8]) ==3) {
             posGana = new int[]{6,7,8};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[0]+tablero[3]+tablero[6]) ==3) {
             posGana = new int[]{0,3,6};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[1]+tablero[4]+tablero[7]) ==3) {
             posGana = new int[]{1,4,7};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[2]+tablero[5]+tablero[8]) ==3) {
             posGana = new int[]{2,5,8};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[0]+tablero[4]+tablero[8]) ==3) {
             posGana = new int[]{0,4,8};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if (Math.abs(tablero[2]+tablero[4]+tablero[6]) ==3) {
             posGana = new int[]{2,4,6};
-            newEstado = 1*turno;
+            newEstado = 1*turnoJugadorUno;
         }else if(conteoFichas == 9){ //Caso de empate
             newEstado = 2;
         }
         return newEstado;
     }
 
-    public  void myToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
-    }
 }
