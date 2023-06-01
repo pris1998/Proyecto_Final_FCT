@@ -25,7 +25,7 @@ public class ResultMemory extends Dialog {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_result);
+            setContentView(R.layout.resultmemory);
 
             TextView messageText = findViewById(R.id.msgText);
             Button starGame = findViewById(R.id.btnOK);
@@ -35,7 +35,8 @@ public class ResultMemory extends Dialog {
             starGame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    memoryActivity.finish();//restartMatch()
+                    memoryActivity.closeOptionsMenu();//restartMatch()
+                    memoryActivity.recreate();
                     dismiss();
                 }
             });
