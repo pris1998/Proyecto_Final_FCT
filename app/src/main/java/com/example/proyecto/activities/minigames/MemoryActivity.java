@@ -186,8 +186,8 @@ public class MemoryActivity extends AppCompatActivity {
                 aciertos++;
                 //comprobar si hemos ganado al hacertar todas las imagenes
                 if (aciertos == imagenes.length) {
-                    Toast toast = Toast.makeText(getApplicationContext(),"Has completado el panel", Toast.LENGTH_LONG);
-                    toast.show();
+                    ResultMemory result = new ResultMemory(MemoryActivity.this,"Has completado el panel",MemoryActivity.this);
+                    result.show();
                 }
             }else{
                handler.postDelayed(new Runnable() {

@@ -8,9 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.proyecto.R;
-import com.example.proyecto.databinding.ActivityMemoryBinding;
 
-import org.checkerframework.common.returnsreceiver.qual.This;
 
 import java.util.Arrays;
 import java.util.Random;
