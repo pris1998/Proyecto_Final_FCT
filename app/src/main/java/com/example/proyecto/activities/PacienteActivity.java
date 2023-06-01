@@ -91,7 +91,7 @@ public class PacienteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Construye la vista donde se va a colocar el menu
-        getMenuInflater().inflate(R.menu.navigator_menu,menu);
+        getMenuInflater().inflate(R.menu.menu_simple,menu);
         return true;
     }
 
