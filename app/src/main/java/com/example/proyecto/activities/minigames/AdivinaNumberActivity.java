@@ -51,16 +51,21 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         btnComprobar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 //numero q mete el usuario
                 int numUser;
+                //try{
                 //convierte a entero
                 numUser = Integer.parseInt(txtNumber.getText().toString());
+
                 //se comprueba que este el numero entre los rangos y no sean cosas distintas
                 if (numUser <0 || numUser > 50 ) {
                     txtMensaje.setText("No es un número correcto");
                 //ayudas para el usuario
                 }else if (numUser > numAleatorio) {
                     txtMensaje.setText("Introduzca un número menor");
+
                 }else{
                     txtMensaje.setText("Introduzca un número mayor");
                 }
@@ -77,7 +82,6 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                 //la parte de la puntuacion
                 intento = intento -1 ;
                 txtMensaje2.setText("Le quedan " + intento + " intentos restantes");
-
                 //si los intentdo acaban = PIERDES
                 if (intento == 0 && numAleatorio != numUser) {
                     btnComprobar.setEnabled(false);
@@ -87,7 +91,16 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                     result.show();
 
                 }
+
+                /*}catch(NumberFormatException e){
+                   e.getMessage();
+                }finally {
+                    Toast.makeText(AdivinaNumberActivity.this, "Formato icorrecto", Toast.LENGTH_SHORT).show();
+                }*/
+
+
             }
+
         });
 
         btnReinicio.setOnClickListener(new View.OnClickListener() {
