@@ -51,8 +51,6 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         btnComprobar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 //numero q mete el usuario
                 int numUser;
                 //try{
@@ -78,7 +76,6 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                     result.show();
 
                 }
-
                 //la parte de la puntuacion
                 intento = intento -1 ;
                 txtMensaje2.setText("Le quedan " + intento + " intentos restantes");
