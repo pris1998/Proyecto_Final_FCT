@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.example.proyecto.R;
@@ -23,6 +22,11 @@ public class PacienteActivity extends AppCompatActivity {
     private ScrollView linearLayout;
     CardView memoryCard, pizarra , tres_en_rayaCard, adivina_numCard;
 
+    /**
+     * Método que se llama cuando se crea la actividad.
+     *
+     * @param savedInstanceState Los datos guardados del estado de la actividad.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +91,23 @@ public class PacienteActivity extends AppCompatActivity {
 
     }
 
-    //Código del menu
-    @Override
+    /**
+     * Crea el menú en la actividad.
+     *
+     * @param menu El menú a inflar.
+     * @return true si se crea el menú correctamente, false en caso contrario.
+     */    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Construye la vista donde se va a colocar el menu
         getMenuInflater().inflate(R.menu.menu_simple,menu);
         return true;
     }
-
+    /**
+     * Maneja los eventos del menú seleccionados.
+     *
+     * @param item El ítem de menú seleccionado.
+     * @return true si el evento del menú se maneja correctamente, false en caso contrario.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();

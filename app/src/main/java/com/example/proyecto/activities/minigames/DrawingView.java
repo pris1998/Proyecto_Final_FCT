@@ -18,28 +18,36 @@ import com.example.proyecto.R;
 
 public class DrawingView extends View {
 
-    //drawing path
+    //La ruta de dibujo
     private Path drawPath;
-    //drawing and canvas paint
+    // Los pinceles para dibujar y para el lienzo
     private Paint drawPaint, canvasPaint;
-    //initial color
+    // El color inicial
     private int paintColor = 0xFF660000;
-    //canvas
+    // El lienzo
     private Canvas drawCanvas;
-    //canvas bitmap
+    //El mapa de bits del lienzo
     private Bitmap canvasBitmap;
 
-    //brusSize (tamaño pincel) y lastBrushSize(seguimiento del último tamaño de pincel )
+    // El tamaño del pincel y el último tamaño de pincel utilizado
     private float brushSize, lastBrushSize;
-    //Borrado
+    // Variable para borrar
     private boolean erase=false;
 
-
+    /**
+     * Constructor de la clase.
+     * @param context El contexto de la aplicación.
+     * @param attrs Atributos XML.
+     */
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupDrawing();
     }
 
+    /**
+     * Configura los elementos necesarios para el dibujo.
+     * Inicializa la ruta de dibujo, los pinceles y el lienzo.
+     */
     private void setupDrawing(){
         drawPath = new Path();
         drawPaint = new Paint();
@@ -59,27 +67,48 @@ public class DrawingView extends View {
 
     }
 
+    /**
+     * Establece el tamaño del pincel.
+     * @param newSize El nuevo tamaño del pincel.
+     */
     public void setBrushSize(float newSize){
-        //update size
+        // Actualiza el tamaño
         float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 newSize, getResources().getDisplayMetrics());
         brushSize=pixelAmount;
         drawPaint.setStrokeWidth(brushSize);
     }
 
+    /**
+     * Establece el último tamaño de pincel utilizado.
+     * @param lastSize El último tamaño de pincel.
+     */
     public void setLastBrushSize(float lastSize){
         lastBrushSize=lastSize;
     }
-    //Obtine el ultimo pincel usado
+
+    /**
+     * Obtiene el último tamaño de pincel utilizado.
+     * @return El último tamaño de pincel.
+     */
     public float getLastBrushSize(){
         return lastBrushSize;
     }
 
+    /**
+     * Establece si se está borrando o no.
+     * @param isErase Indica si se está borrando.
+     */
     public void setErase(boolean isErase){
         erase=isErase;
         if(erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         else drawPaint.setXfermode(null);
     }
+
+    /**
+     * Comienza un nuevo dibujo.
+     * Borra el lienzo y lo actualiza.
+     */
     public void startNew(){
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
@@ -133,8 +162,13 @@ public class DrawingView extends View {
         // Establecer las dimensiones medidas de la vista
         setMeasuredDimension(width, height);
     }
-    //El usuario al tocar la pantalla puede tocarla en cualquier lado ,
-    // sigue el movimiento del usuario con el dedo
+
+    /**
+     * Maneja el evento de tocar la pantalla.
+     * Permite al usuario dibujar en la vista siguiendo el movimiento del dedo.
+     * @param event El evento táctil.
+     * @return Verdadero si el evento fue manejado, falso de lo contrario.
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float touchX = event.getX();
@@ -157,6 +191,11 @@ public class DrawingView extends View {
         invalidate();
         return true;
     }
+
+    /**
+     * Establece el color de dibujo de la parcela de colores
+     * @param newColor El nuevo color en formato hexadecimal.
+     */
     public void setColor(String newColor){
         invalidate();
         paintColor = Color.parseColor(newColor);

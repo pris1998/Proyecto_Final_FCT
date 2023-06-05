@@ -24,9 +24,11 @@ import com.example.proyecto.activities.PacienteActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
+/**
+ * Actividad que implementa el juego de memoria.
+ */
 public class MemoryActivity extends AppCompatActivity {
-    //Menu cerrar sesión
+
     private LinearLayout constraintLayout;
     //Fila 1
     ImageButton btn00, btn0A ,btn0B ,btn0C;
@@ -51,11 +53,11 @@ public class MemoryActivity extends AppCompatActivity {
     //Variables de la logica del juego
     ArrayList<Integer> arrayAleatorio;
     ImageButton first;
-    //se compara para ver si son iguales y si no se vuelven a tapar
+    // Se compara para ver si son iguales y si no se vuelven a tapar
     int num1, num2;
-    //variable en el caso que se equivoque por ello se bloquea todo
+    // Variable en el caso de que se equivoque por ello se bloquea todo
     boolean bloqueado = false;
-    //tiempo de las cartas
+    // Tiempo de las cartas
     final Handler handler = new Handler();
 
     @Override
@@ -66,6 +68,9 @@ public class MemoryActivity extends AppCompatActivity {
         init();
     }
 
+    /**
+     * Método para cargar los elementos del tablero.
+     */
     private void cargarTablero(){
         btn00 = findViewById(R.id.btn00);
         btn0A = findViewById(R.id.btn0A);
@@ -145,46 +150,46 @@ public class MemoryActivity extends AppCompatActivity {
     private ArrayList<Integer> arrayBarajar(int tamanio){
         ArrayList<Integer> result = new ArrayList<>();
         for (int i = 0; i < tamanio*2 ; i++) {
-            //llegaría hasta 7
-            //el resultado va a ser entre (0 y 8) -1  = 7
+            // Llegaría hasta 7
+            // El resultado va a ser entre (0 y 8) - 1 = 7
             result.add(i % tamanio);
         }
         //Se desordena así:
         Collections.shuffle(result);
-        //lo saco por pantalla y luego lo quito
+        // Lo saco por pantalla y luego lo quito
         System.out.println(Arrays.toString(result.toArray()));
         return result;
     }
 
-    //final es pq cada boton se pasa como parametro
+    // Final es porque cada botón se pasa como parámetro
     public void comprobarCelda(int num , final ImageButton imgbtn){
-        //comprobar la imagen es el que se ha pulsado y se convierte en el primero
+        // Comprobar la imagen es la que se ha pulsado y se convierte en el primero
         if (first == null) {
             first = imgbtn;
             //Se pasa la imagen
             first.setScaleType(ImageView.ScaleType.CENTER_CROP);
             first.setImageResource(imagenes[arrayAleatorio.get(num)]);
-            //al ser destapado el boton se inabilita
+            // Al ser destapado el botón se inhabilita
             first.setEnabled(false);
-            //número asignado es el que se le pasa al array
+            // Número asignado es el que se le pasa al array
             num1 = arrayAleatorio.get(num);
         }else{
-            //cuando estén dos destapadas no se pueden pulsar más
+            // Cuando estén dos destapadas no se pueden pulsar más
             bloqueado = true;
             //Se pasa la imagen
             imgbtn.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imgbtn.setImageResource(imagenes[arrayAleatorio.get(num)]);
-            //al ser destapado el boton se inabilita
+            // Al ser destapado el botón se inhabilita
             imgbtn.setEnabled(false);
             num2 = arrayAleatorio.get(num);
-            //ambos números están guardados
-            //comprueba que sean iguales
+            // Ambos números están guardados
+            // Comprueba que sean iguales
             if (num1 == num2) {
-                //se ha acertado
+                // Se ha acertado
                 first = null;
                 bloqueado = false;//ya se puede seguir pulsado los demás números
                 aciertos++;
-                //comprobar si hemos ganado al hacertar todas las imagenes
+                // Comprobar si hemos ganado al acertar todas las imágenes
                 if (aciertos == imagenes.length) {
                     ResultMemory result = new ResultMemory(MemoryActivity.this,"Has completado el panel",MemoryActivity.this);
                     result.show();
@@ -196,7 +201,7 @@ public class MemoryActivity extends AppCompatActivity {
                        first.setScaleType(ImageView.ScaleType.CENTER_CROP);
                        first.setImageResource(fondo);
                        first.setEnabled(true);
-                       //imagen
+                       //Imagen
                        imgbtn.setScaleType(ImageView.ScaleType.CENTER_CROP);
                        imgbtn.setImageResource(fondo);
                        imgbtn.setEnabled(true);
@@ -215,19 +220,17 @@ public class MemoryActivity extends AppCompatActivity {
     private void init(){
         cargarTablero();
         cargarBotones();
-
         cargarImagenes();
-        //CREACIÓN DEL ARRAY DESORDENADO
+        //Creación array desordenado
         arrayAleatorio = arrayBarajar(imagenes.length);
-        //cargar las imagenes
+        // Cargar las imágenes
         for (int i = 0; i < tablero.length; i++) {
             //Imagen quede centrada a escala
             tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
             //Asignar imagenes
             tablero[i].setImageResource(imagenes[arrayAleatorio.get(i)]);
-            //tablero[i].setImageResource(fondo);
         }
-        //Mostrar las parejas durante un tiempo limitado para recordar algunas
+        // Mostrar las parejas durante un tiempo limitado para recordar algunas
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -235,25 +238,24 @@ public class MemoryActivity extends AppCompatActivity {
                     //Imagen quede centrada a escala
                     tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
                     //Asignar imagenes
-                    //tablero[i].setImageResource(imagenes[arrayAleatorio.get(i)]);
                     tablero[i].setImageResource(fondo);
                 }
             }
         },500);
 
         for (int i = 0; i <tablero.length ; i++) {
-            //para que no de problema el método comprobarCelda ya que tiene un parametro final
+            // Para que no de problema el método comprobarCelda ya que tiene un parámetro final
             final int j = i ;
-            //Habilita todos los botones del tablero (ImageButton)
+            // Habilita todos los botones del tablero (ImageButton)
             tablero[i].setEnabled(true);
-            //Metemos un listener por cada boton permitirá que se muestre lo q
-            //hay debajo del fondo
+            // Metemos un listener por cada botón permitirá que se
+            // muestre lo que hay debajo del fondo
             tablero[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //si el boton no esta bloqueado
+                    // Si el botón no está bloqueado
                     if (!bloqueado) {
-                        //llama a un metodo de comprobacion
+                        // Llama a un método de comprobación
                         comprobarCelda(j, tablero[j]);
                     }
                 }
@@ -263,7 +265,7 @@ public class MemoryActivity extends AppCompatActivity {
     //Código del menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Construye la vista donde se va a colocar el menu
+        // Construye la vista donde se va a colocar el menú
         getMenuInflater().inflate(R.menu.navigator_menu,menu);
         return true;
     }

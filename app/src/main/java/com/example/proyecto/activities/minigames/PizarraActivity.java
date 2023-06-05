@@ -23,6 +23,10 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
+/**
+ * Esta actividad permite al usuario dibujar en una pizarra y realizar acciones como cambiar el tamaño del pincel,
+ * borrar, crear un nuevo dibujo y guardar el dibujo en la galería.
+ */
 
 public class PizarraActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout constraintLayout;
@@ -62,6 +66,14 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
         saveBtn.setOnClickListener(this);
 
     }
+
+    /**
+     * Método llamado cuando se hace clic en uno de los colores de la paleta de pintura.
+     * Cambia el color del pincel y actualiza la apariencia del botón seleccionado.
+     *
+     * @param view La vista del color seleccionado.
+     */
+
     public void paintClicked(View view){
         drawView.setErase(false);
         //use chosen color
@@ -91,6 +103,11 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
             guardarDibujo();
         }
     }
+
+    /**
+     * Muestra un diálogo para seleccionar el tamaño del pincel.
+     * Actualiza el tamaño del pincel en función de la opción seleccionada por el usuario.
+     */
 
     public void tamanioPincel(){
         final Dialog brushDialog = new Dialog(this);
@@ -133,7 +150,10 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
         });
         brushDialog.show();
     }
-
+    /**
+     * Muestra un diálogo para seleccionar el tamaño de la goma de borrar.
+     * Actualiza el tamaño de la goma de borrar en función de la opción seleccionada por el usuario.
+     */
     public void tamanioGoma(){
         final Dialog gomaDialog = new Dialog(this);
         gomaDialog.setTitle("Tamaño goma:");
@@ -168,7 +188,10 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
         });
         gomaDialog.show();
     }
-
+    /**
+     * Muestra un diálogo de confirmación para iniciar un nuevo dibujo.
+     * Si el usuario confirma, se borra el dibujo actual y se comienza uno nuevo.
+     */
     public void nuevoDibujo(){
         //new button
         AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
@@ -187,10 +210,13 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
         });
         newDialog.show();
     }
-
+    /**
+     * Muestra un diálogo de confirmación para guardar el dibujo.
+     * Si el usuario confirma, se guarda el dibujo en la galería del dispositivo.
+     */
     public void guardarDibujo(){
         AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
-        saveDialog.setTitle("Dibujo guardado");
+        saveDialog.setTitle("Guardar dibujo");
         saveDialog.setMessage("Quiere guardar el dibujo en la galería?");
         saveDialog.setPositiveButton("Si", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
@@ -220,14 +246,22 @@ public class PizarraActivity extends AppCompatActivity implements View.OnClickLi
         saveDialog.show();
     }
 
-    //Código del menu
+    /**
+     * Crea el menú de opciones en la barra de acciones.
+     * @param menu El menú en el que se mostrarán las opciones.
+     * @return Devuelve true si se ha creado correctamente el menú, false en caso contrario.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Construye la vista donde se va a colocar el menu
         getMenuInflater().inflate(R.menu.navigator_menu,menu);
         return true;
     }
-
+    /**
+     * Maneja las acciones cuando se selecciona una opción del menú de acciones.
+     * @param item La opción del menú seleccionada.
+     * @return Devuelve true si se ha manejado correctamente la acción, false en caso contrario.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();

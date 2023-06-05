@@ -84,13 +84,13 @@ public class LoginActivity extends AppCompatActivity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //No esta verificado te reedirige a la pagina del Registro para registrar el usuario
+                // Redirige a la página de registro para registrar al usuario
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class );
                 startActivity(intent);
             }
         });
 
-        //Google configuration
+        // Configuración de Google
         signInButton = findViewById(R.id.loginGoogle);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,17 +111,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Conexión a la base de datos
+        //Conexión a Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
     }
 
-
+    /**
+     * Muestra un mensaje Toast en pantalla.
+     *
+     * @param msg El mensaje a mostrar.
+     */
     public void myToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
 
-    //parte nueva
+    /**
+     * Valida los campos de correo electrónico y contraseña
+     * antes de iniciar sesión.
+     */
     public void validate() {
         email = txtEmailUser.getText().toString().trim();
         password = txtPasswordUser.getText().toString().trim();
@@ -146,7 +153,13 @@ public class LoginActivity extends AppCompatActivity {
 
         iniciarSesion(email,password);
     }
-
+    /**
+     * Inicia sesión en Firebase con el correo electrónico y
+     * contraseña especificados.
+     *
+     * @param email    El correo electrónico del usuario.
+     * @param password La contraseña del usuario.
+     */
     public void iniciarSesion(String email, String password){
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -162,7 +175,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    /**
+     * Lanzador de resultados para iniciar sesión con Google.
+     */
     private ActivityResultLauncher<Intent> resultGoogleLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -193,7 +208,9 @@ public class LoginActivity extends AppCompatActivity {
             }
     );
 
-
+    /**
+     * Inicia el proceso de inicio de sesión con Google.
+     */
     public void signInGoogle(){
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_usuario_id))

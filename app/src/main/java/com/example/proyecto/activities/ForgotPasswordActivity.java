@@ -19,6 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
+/**
+ * Clase que obtiene un email para poder mandar la confirmacion para
+ * obtener una contraseña nueva.
+ */
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     MaterialButton btnRecuperar;
@@ -65,7 +69,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    /**
 
+     Envía un correo electrónico para restablecer la contraseña del usuario.
+
+     @param email La dirección de correo electrónico del usuario.
+     */
     public void sendEmail(String email){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String emailAdress = email;

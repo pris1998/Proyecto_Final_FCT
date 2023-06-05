@@ -20,7 +20,10 @@ import com.example.proyecto.activities.PacienteActivity;
 
 import java.util.Arrays;
 import java.util.Random;
-
+/**
+ * Clase TresEnRayaActivity.
+ * Representa la actividad del juego Tres en Raya.
+ */
 public class TresEnRayaActivity extends AppCompatActivity {
     private RelativeLayout constraintLayout;
 
@@ -40,7 +43,12 @@ public class TresEnRayaActivity extends AppCompatActivity {
     //cuando sea -1 aun no hay ganador
     int[] posGana = new int[]{-1};
 
-
+    /**
+     * Método onCreate.
+     * Se ejecuta cuando se crea la actividad.
+     * Inicializa la interfaz de usuario y configura los eventos de los botones.
+     * @param savedInstanceState El estado guardado de la actividad.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +59,9 @@ public class TresEnRayaActivity extends AppCompatActivity {
         inicializarCasillas();
 
     }
-
+    /**
+     * Método para cargar las casillas del tablero.
+     */
     private void cargarCasillas(){
         casillas = new Integer[]{
                 R.id.btn00,
@@ -65,7 +75,10 @@ public class TresEnRayaActivity extends AppCompatActivity {
                 R.id.btn08,
         };
     }
-
+    /**
+     * Método para inicializar las casillas del tablero.
+     * Configura los eventos de clic para cada casilla.
+     */
     private void inicializarCasillas(){
         btn00 = findViewById(R.id.btn00);
         btn01 = findViewById(R.id.btn01);
@@ -136,6 +149,10 @@ public class TresEnRayaActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método para colocar una ficha en una casilla.
+     * @param view La vista del botón en el que se hizo clic.
+     */
 
     private void ponerFicha(View view){
         //estamos jugando
@@ -160,7 +177,9 @@ public class TresEnRayaActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**
+     * Método para generar una posición aleatoria en el tablero y colocar una ficha.
+     */
     public void generarPosicionAleatoria(){
         Random random = new Random();
         int pos = random.nextInt(tablero.length);
@@ -172,7 +191,9 @@ public class TresEnRayaActivity extends AppCompatActivity {
         btn.setBackgroundResource(R.drawable.circulo);
         tablero[pos] = -1;
     }
-
+    /**
+     * Método para finalizar la partida y mostrar el resultado.
+     */
     private void terminarPartida(){
         //habara terminado yo o la maquina
         if (estado == 1 || estado == -1) {
@@ -192,7 +213,10 @@ public class TresEnRayaActivity extends AppCompatActivity {
         }
 
     }
-
+    /**
+     * Método para comprobar el estado de las casillas y determinar si hay un ganador o empate.
+     * @return El estado actual del juego (0: en progreso, 1: ganador, -1: perdedor, 2: empate).
+     */
     private int comprobarEstadoCasillas(){
         int newEstado = 0;
         //primera posicion seria todas igaul a 3 es que ha gandado pq estado = 1

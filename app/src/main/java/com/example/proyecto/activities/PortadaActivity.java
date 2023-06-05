@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,36 +24,36 @@ public class PortadaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Para quitar la flanga de la parte de arriba
+        // Para quitar la barra de notificaciones en la parte superior
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_portada);
 
-        //Agregar animaciones
+        // Agregar animaciones
         Animation animacion1 = AnimationUtils.loadAnimation(this,R.anim.top);
         Animation animacion2 = AnimationUtils.loadAnimation(this,R.anim.bottom);
 
         imageViewIcono = findViewById(R.id.imageViewIcono);
         imgVTitulo = findViewById(R.id.imgVTitulo);
 
-        //asignamos la animacion
+        // Asignamos la animación
         imgVTitulo.setAnimation(animacion1);
         imageViewIcono.setAnimation(animacion2);
 
 
-        //despues de salir la animacion se vaya a otra Actividad
+        // Después de que termine la animación, ir a otra actividad
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //Si el usuario ya inicio sesion se dirige directamente al ChooseUser
+                // Si el usuario ya ha iniciado sesión, ir directamente a la actividad de Paciente
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                //Si el usuario ya inicio sesioncon Google
+                // Si el usuario ha iniciado sesión con Google
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(PortadaActivity.this);
                 if (user != null && account != null) {
                     Intent intent = new Intent(PortadaActivity.this,PacienteActivity.class );
                     startActivity(intent);
                     finish();
                 }else{
-                    //Si aun no ha iniciado sesion se dirige al Login
+                    // Si el usuario no ha iniciado sesión, ir a la actividad de Login
                     Intent intent = new Intent(PortadaActivity.this,LoginActivity.class );
                     startActivity(intent);
                     finish();

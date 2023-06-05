@@ -19,6 +19,9 @@ import com.example.proyecto.R;
 import com.example.proyecto.activities.LoginActivity;
 import com.example.proyecto.activities.PacienteActivity;
 
+/**
+ Clase que representa la actividad del juego de adivinar un número.
+ */
 public class AdivinaNumberActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     TextView textNumSelect, txtMensaje, txtMensaje2;
@@ -34,7 +37,7 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_adivina_number);
         constraintLayout = (ConstraintLayout) findViewById(R.id.root_adivinanumero);
 
-
+        // Inicialización de los elementos de la interfaz
         textNumSelect = findViewById(R.id.textNumSelect);
         txtNumber = findViewById(R.id.txtNumber);
         txtMensaje = findViewById(R.id.txtMensaje);
@@ -45,28 +48,27 @@ public class AdivinaNumberActivity extends AppCompatActivity {
 
         btnReinicio.setEnabled(false);
 
-        //metodo que crea el numer aleatorio
+        // Generación del número aleatorio
         numAleatorio = crearNumAleatorio();
 
         btnComprobar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //numero q mete el usuario
+                // Obtener el número ingresado por el usuario
                 int numUser;
-                //try{
-                //convierte a entero
+
                 numUser = Integer.parseInt(txtNumber.getText().toString());
 
-                //se comprueba que este el numero entre los rangos y no sean cosas distintas
+                // Comprobar si el número ingresado es válido
                 if (numUser <0 || numUser > 50 ) {
                     txtMensaje.setText("No es un número correcto");
-                //ayudas para el usuario
                 }else if (numUser > numAleatorio) {
                     txtMensaje.setText("Introduzca un número menor");
 
                 }else{
                     txtMensaje.setText("Introduzca un número mayor");
                 }
+                // Comprobar si el número ingresado es el número aleatorio
                 if (numUser == numAleatorio) {
                     //desactiva
                     btnComprobar.setEnabled(false);
@@ -76,10 +78,9 @@ public class AdivinaNumberActivity extends AppCompatActivity {
                     result.show();
 
                 }
-                //la parte de la puntuacion
+                // Actualizar la puntuación y comprobar si se ha agotado el número de intentos
                 intento = intento -1 ;
                 txtMensaje2.setText("Le quedan " + intento + " intentos restantes");
-                //si los intentdo acaban = PIERDES
                 if (intento == 0 && numAleatorio != numUser) {
                     btnComprobar.setEnabled(false);
                     btnReinicio.setEnabled(true);
@@ -89,13 +90,6 @@ public class AdivinaNumberActivity extends AppCompatActivity {
 
                 }
 
-                /*}catch(NumberFormatException e){
-                   e.getMessage();
-                }finally {
-                    Toast.makeText(AdivinaNumberActivity.this, "Formato icorrecto", Toast.LENGTH_SHORT).show();
-                }*/
-
-
             }
 
         });
@@ -103,8 +97,8 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         btnReinicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Generar un nuevo número aleatorio y reiniciar la interfaz
                 numAleatorio = crearNumAleatorio();
-                //lo vaciamos todo
                 btnComprobar.setEnabled(true);
                 btnReinicio.setEnabled(false);
                 txtNumber.setText("");
@@ -114,19 +108,30 @@ public class AdivinaNumberActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     Genera un número aleatorio entre 1 y 50.
+     @return El número aleatorio generado.
+     */
     private int crearNumAleatorio(){
-        //devuelve un número generado aleatoriamente entre (1 y 100)
         return (int) (Math.random()*50+1);
     }
 
-    //Código del menu
+    /**
+     Crea el menú de opciones en la barra de acción.
+     @param menu El menú en el que se añadirán las opciones.
+     @return true si se ha creado el menú correctamente, false en caso contrario.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Construye la vista donde se va a colocar el menu
         getMenuInflater().inflate(R.menu.navigator_menu,menu);
         return true;
     }
 
+    /**
+     Maneja la selección de una opción del menú de la barra de acción.
+     @param item El elemento del menú seleccionado.
+     @return true si se ha manejado la selección correctamente, false en caso contrario.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
