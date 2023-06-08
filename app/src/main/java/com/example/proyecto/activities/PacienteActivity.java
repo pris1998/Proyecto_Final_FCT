@@ -54,7 +54,7 @@ public class PacienteActivity extends AppCompatActivity {
                     //esto no me sale
                     AlertDialog.Builder builder = new AlertDialog.Builder(PacienteActivity.this);
                     builder.setCancelable(false);
-                    builder.setView(R.layout.progress_layout);
+                    //builder.setView(R.layout.progress_layout);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }

@@ -1,20 +1,14 @@
 package com.example.proyecto.activities;
 
-import static com.example.proyecto.activities.LoginActivity.auth;
-import static com.example.proyecto.activities.LoginActivity.user;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,31 +18,26 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextView txtVEmailR, txtnewUser;
+    TextView  txtnewUser;
 
     TextInputEditText txtEEmail, txtEPassword, confirmarPassword;
 
-    TextInputEditText txtName;
 
     Button btnInicioS;
 
     String email ;
     String password;
     String confirmPassword;
-    String nombre_Usuario;
 
     private FirebaseAuth Fauth = FirebaseAuth.getInstance();
 
@@ -74,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Volver al pulsar el texto al inicio
                 Intent intent = new Intent(RegisterActivity.this,LoginActivity.class );
-                intent.putExtra("Login","mensaje");
                 startActivity(intent);
             }
         });
@@ -89,56 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void myToast(String mensaje){
         Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
-    }
-    /**
-     * Método para crear usuarios y evitar repetir código.
-     *
-     * @param email    El correo electrónico del usuario.
-     * @param password La contraseña del usuario.
-     */
-
-    //QUITAR ESTO PORQUE NO LO ESTOY LLAMANDO EN NNINGUN SITIO PERO USAR EL ALERT
-    //Metodo a parte para crear usuarios y evitar repetir codigo
-    private void createUsers(String email , String password){
-            //Si no estan vacios los rellena y los crea
-            auth.createUserWithEmailAndPassword( email,  password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                @Override
-                public void onSuccess(AuthResult authResult) {
-                    //Manda un email al correo de registrado para comprobar que está bien hecho
-                    user.sendEmailVerification();
-                    //alerta para decirle al usuario que se ha mandado un menseje
-                    // para verificar que el registro ha sido existoso
-                    alertDialog("Aviso usuario creado ",
-                            "Se ha enviado un enlace a su " +
-                                    " email para su verificacion.Compruebe su usuario");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    myToast("Error al registrarse");
-
-                }
-            });
-    }
-
-    /**
-     * Método para mostrar un diálogo de alerta.
-     *
-     * @param title   El título del diálogo.
-     * @param mensaje El mensaje del diálogo.
-     * @return El diálogo de alerta creado.
-     */
-    public AlertDialog alertDialog(String title, String mensaje){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(mensaje);
-        builder.setPositiveButton("Aceptar", null);
-        builder.setNegativeButton("Cancelar",null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        return dialog;
-
     }
 
     /**
@@ -175,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                 confirmarPassword.setError("Deben ser iguales");
                 return;
         } else {
-            registroBD(nombre_Usuario,email, password);
+            registroBD(email, password);
             registro(email, password);
         }
     }
@@ -205,15 +143,13 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * Método para registrar al usuario en la base de datos de Firebase Firestore.
      *
-     * @param name     El nombre del usuario.
      * @param email    El correo electrónico del usuario.
      * @param password La contraseña del usuario.
      */
-    public void registroBD(String name, String email,String password){
+    public void registroBD( String email,String password){
         //Uso un HashMap porque es más facil ya que tiene un clave por (String)
         // y un valor (Object) son los objetos que se guardan al ecribirlo mediante la pantalla de Registro
         Map<String,Object> mapDatos = new HashMap<>();
-        mapDatos.put("name",name);
         mapDatos.put("email",email);
         mapDatos.put("password",password);
         firebaseFirestore.collection("users").add(mapDatos).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
